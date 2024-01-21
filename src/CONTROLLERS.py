@@ -1,5 +1,5 @@
 def world_controller(bank):
-    action = input("Where would you like to go? (bank/atm/home) ")
+    action = input("\nWhere would you like to go? (bank/atm/home) ")
     if action.lower() == "bank":
         bank_controller(bank)
     
@@ -10,15 +10,15 @@ def world_controller(bank):
         print("Good night.")
         
     else:
-        print("I have no idea what you just said.\n")
+        print("I have no idea what you just said.")
         world_controller()
         
 
 def bank_controller(bank):
-    print("You're at the bank\n")
+    print("You're at the bank.")
     bank.enact()
 
 def atm_controller(bank):
-    print("you're at the ATM\n")
+    print("You're at the ATM.")
     bank.ATM.enact()
 

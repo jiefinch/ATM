@@ -23,12 +23,12 @@ def enact_template(hello_str, actions, bank):
 class Bank:
     def __init__(self):
         self.customers = {}
+        self.ATM = ATM(self)
         self.activeCards = {} # cardID: card
         self.actions = {'new customer': self.new_customer,
                 'returning customer': self.returning_customer,
                 'return': world_controller}
 
-        
     def new_customer(self):
         name = input("\nWhat is your name? ")
         if name in self.customers:
@@ -50,7 +50,16 @@ class Bank:
             print("Cannot find ya. Consider registering.")
             bank_controller(self)
             
-        
+    def get_card(self, cardID):
+        if cardID in self.activeCards:
+            return self.activeCards[cardID]
+        else:
+            print("Card does not exist.")
+            return None
+            
+    def check_pin(self, card, pin):
+        return card.pin == pin
+    
     def enact(self):
         hello_str = "Here's what you can do at the bank"
         enact_template(hello_str, self.actions, self)
@@ -93,7 +102,7 @@ class Customer:
                 account = self.accounts.pop(name)
                 self.bank.activeCards.pop(account.card.ID) # deactivate card in bank registry
                 money = account.balance
-                print(f"You have succesfully closed account. Returning ${money}")
+                print(f"You have succesfully closed account. Returning ${money}.")
 
         self.enact()
         
@@ -150,20 +159,18 @@ class ATM():
     def insert_card(self):
         cardID = input("\nPlease insert your card: ") 
         
-        if cardID in self.bank.activeCards:
-            card = self.bank.activeCards[cardID]
+        card = self.bank.get_card(cardID)
+        if card:
             pin = input("\nPlease type in your Pin to view account: ")
-            
-            if pin == card.pin: # SUCCESS
+            if self.bank.check_pin(card, pin):
                 customer = card.account.customer
                 print(f"Welcome back, {customer.name}.")
-                valid = InternalATM(self, customer)
-                valid.select_account()
+                valid_session = InternalATM(self, customer)
+                valid_session.select_account()
             else:
                 print("Error. Invalid pin.")
                 self.enact()
         else:
-            print("Invalid Card. Try again.")
             self.enact()
 
     def enact(self):
@@ -188,7 +195,6 @@ class InternalATM():
         self.enact()
     
     def see_balance(self):
-        # no security problem, int type is unmutable / readonly 
         print(f"You have ${self.account.balance} in account {self.account.name}.")
         self.enact()
     
@@ -222,5 +228,5 @@ class InternalATM():
         
     def enact(self):
         hello_str = "Here's what you can do with your account"
-        enact_template(hello_str, self.actions, self)
+        enact_template(hello_str, self.actions, self.ATM.bank)
         

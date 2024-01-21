@@ -3,8 +3,6 @@ from src.BANK import *
 from src.CONTROLLERS import *
 
 WooriBank = Bank()
-WooriATM = ATM(WooriBank)
-
 
 print("Hello. Welcome to the world.\n")
 world_controller(WooriBank)

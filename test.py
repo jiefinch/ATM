@@ -1,31 +1,35 @@
-import unittest
-from unittest.mock import patch
-from src.BANK import *
-from src.CONTROLLERS import *
-WooriBank = Bank()
+# Due to difficulties with handling user input, here is the manual testing test cases.
+# Sorry, i usally like to do automated unit testing ):
+# to achieve this i would need to think of a way to stop the flow of inputs so i can chunk the methods individually
 
 """
-Things to test (FUNCTIONALITY)
-1. go to bank
-2. new customer
-3. open account
-4. set pin
-5. return back to world
-6. go to atm
-7. insert card into atm
-8. view balance
-9. deposit 10
-10. withdraw 10
-11. go home
+Things to test (BASIC FUNCTIONALITY)
+go to bank
+new customer: boo
+open account: check, 9 -> error
+open account: check, 150
+set pin: 123
+return back to world
+go to atm
+insert card into atm
+wrong pin
+right pin
+deposit 10 -> 160
+check balance -> 160
+withdraw 15 -> 145
+check balance -> 145
+overdraft (fee): 200 -> 144
+go back to bank
+return customer: boo
+close account: check
+new customer: fred
+open account: check, 20
+open account: save, 30
+go to atm
+insert card (boo, check) into atm -> error
+insert card (fred, save) into atm
+check balance: 30
+insert card (fred, check) into atm
+check balance: 20
+go home
 """
-
-class Tests(unittest.TestCase):
-
-    @patch('builtins.input', return_value='hello')
-    def test_process_input(self, mock_input):
-        result = process_input()
-        self.assertEqual(result, 'HELLO')
-
-if __name__ == '__main__':
-    unittest.main()
-result, 'HELLO')
