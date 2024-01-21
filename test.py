@@ -20,11 +20,13 @@ withdraw 15 -> 145
 check balance -> 145
 overdraft (fee): 200 -> 144
 go back to bank
-return customer: boo
-close account: check
 new customer: fred
 open account: check, 20
+set pin: 121
 open account: save, 30
+set pin: 1
+return customer: boo
+close account: check
 go to atm
 insert card (boo, check) into atm -> error
 insert card (fred, save) into atm
