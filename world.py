@@ -1,8 +1,9 @@
 # Insert Card => PIN number => Select Account => See Balance/Deposit/Withdraw
-from BANK import *
-from ATM import *
-from CONTROLLERS import *
+from src.BANK import *
+from src.ATM import *
+from src.CONTROLLERS import *
 
 WooriBank = Bank()
-WooriATM = ATM()
+WooriATM = ATM(WooriBank)
 
+world_controller()

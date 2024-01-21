@@ -6,15 +6,20 @@ class Bank:
         self.customers = {}
         self.activeCards = {} # cardID: card
         
-    def new_customer(self, name):
-        # TODO
-        pass
+    def new_customer(self):
+        name = input("What is your name?")
+        print(f"Registering {name} with our bank.")
+        customer = Customer(self, name)
+        self.customers[name] = customer
+        
     
 class Customer:
     def __init__(self, Bank, name):
         self.Bank = Bank
         self.name = name
         self.accounts = {}
+        
+        print("Would you like to open an account")
     
     def open_account(self, name, balance = 0):
         # name: name of account
